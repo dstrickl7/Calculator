@@ -7,7 +7,6 @@ const memory= document.querySelectorAll(".memoryButtons");
 const clear = document.getElementById("clear");
 const deleteButton= document.getElementById("delete");
 const history = document.getElementById("history");
-const historyClear = document.getElementById("historyClear");
 let currentOp="";
 let val1="";
 let val2="";
@@ -17,88 +16,50 @@ let isDecimal= false;
 let wasEvaluated= false;
 
 
+
 /*Math Functions*/
-const add= (num1, num2)=>{return num1+num2};
+const add= (num1, num2)=>{return Number(num1)+Number(num2)};
 const subtract= (num1, num2)=>{return num1-num2};
 const multiply= (num1, num2)=>{return num1*num2};
 const divide= (num1, num2)=> {
-	if(num2===0){
-	  return "Can't divide by zero"
+	if(num2==0){
+	  return "Don't be cheeky";
 	}else{
 	  return num1/num2;
 	}};
 
+/*Current issues to fix*/
+/*If two different operators are selected, only the first operator is registered. Need to return the last operator*/
+/*If evaluated, hitting an operation does not continue the operation.*/
+/*If large number is returned, value breaks out of it's container*/
+/*If backspace deletes a decimal, a new decimal can't be added*/
 
-/*Need to do: if evaluate, update history to include last value and reset all values*/
-
-function evaluate(){
-  if(currentOp !== null){
-    calcWindow.innerText=operate();
-    val2+=val1+" ";
-  history.innerText=val2;
-  val1="";
-  wasEvaluated=true;   
+function getNums(x){
+  if(wasEvaluated==true){
+    resetCalc();
   }
-}
-
-
-function operate(){
-  switch(operation){
-    case "add":
-      tempResult= add(result, val1);
-      return tempResult;
-    case "subtract":
-      tempResult= subtract(result, val1);
-      return tempResult;
-    case "times":
-      tempResult= multiply(result, val1);
-     return tempResult;
-    case "divide":
-      tempResult= divide(result, val1);
-      return tempResult;
-      
-  }
-}
-
-clear.addEventListener("click", clearAll);
-deleteButton.addEventListener("click", ()=>{
-	calcWindow.innerText=calcWindow.innerText.slice(0,-1);
-});
-equal.addEventListener("click", evaluate);
-
-
-
-/*display numbers on screen*/
-number.forEach(button => button.addEventListener("click", (x)=>{
   if(x.target.innerText==="." && !isDecimal){
     isDecimal=true;
-  }else if (x.target.innerText==="." && isDecimal){
+  }else if(x.target.innerText==="." && isDecimal){
     return
   }
-  if(wasEvaluated){
-    calcWindow.innerText="";
-    result=null;
-    currentOp="";
-    val1="";
-    val2="";
-    isDecimal=false;
-    wasEvaluated=false;
-    val1+=button.innerText;
-    calcWindow.innerText= val1;
-  }else{
-    val1+=button.innerText;
-    calcWindow.innerText= val1;
-  }
-  
-}));
+  val1+=x.target.innerText;
+  calcWindow.innerText= val1;
+}
 
+/*Need to stop 0 from being displayed if negate button is pushed with no value in window*/
 
-operator.forEach(button => button.addEventListener("click", (x)=>{
+function addNeg(){
+  calcWindow.innerText= -calcWindow.innerText;
+  val1=calcWindow.innerText;
+  wasNegated=true;
   
+}
+
+function getOp(x){
   if(!val1){
     history.innerText=result;
     return;
-    
   }
   isDecimal=false;
   const opName = x.target.name;
@@ -106,32 +67,97 @@ operator.forEach(button => button.addEventListener("click", (x)=>{
   if(result && val1 && opName){
     tempResult=operate();
     calcWindow.innerText=operate();
+    val2+=val1+" "+currentOp;
+		history.innerText=val2;
+		val1="";
+    result=Number(tempResult);
   }else{
-    result=parseFloat(val1);
-    
+    result=Number(val1);
   }
-  
   clearVar(currentOp);
   operation=opName;
-   
-  }));
+}
 
+function evaluate(){
+  if(val2==""){
+    calcWindow.innerText=Number(val1);
+    history.innerText=Number(val1);
+    wasEvaluated=true; 
+  } else if(currentOp !== null){
+    calcWindow.innerText=operate();
+    val2+=val1+" ";
+    history.innerText=val2;
+    val1="";
+    wasEvaluated=true;   
+  }
+}
+
+function operate(){
+  switch(operation){
+    case "plus":
+      tempResult= add(result, val1);
+      return tempResult;
+    case "minus":
+      tempResult= subtract(result, val1);
+      return tempResult;
+    case "times":
+      tempResult= multiply(result, val1);
+     return tempResult;
+    case "divide":
+        return tempResult= divide(result, val1);;
+  }
+}
 
 function clearVar(innerText=""){
 	if(!tempResult){
 		val2+=val1+" " + innerText + " ";
 		history.innerText=val2;
-		calcWindow.innerText="";
 		val1="";
-		}else{
-		  
 		}
   }
   
-function clearAll(){
-	calcWindow.innerText="";
+function resetCalc(){
+  calcWindow.innerText="";
+  result=null;
+  tempResult=null;
   currentOp="";
   val1="";
   val2="";
+  history.innerText="";
   isDecimal=false;
+  wasEvaluated=false;
+  wasNegated=false;
 }
+
+clear.addEventListener("click", resetCalc);
+
+deleteButton.addEventListener("click", ()=>{
+	calcWindow.innerText=calcWindow.innerText.slice(0,-1);
+  val1=calcWindow.innerText;
+});
+equal.addEventListener("click", evaluate);
+
+negate.addEventListener("click", addNeg);
+
+number.forEach(button => button.addEventListener("click", getNums));
+
+operator.forEach(button => button.addEventListener("click", getOp));
+
+document.addEventListener("keydown", (x)=>{
+   if(x.key>=0 && x.key<=9){
+     val1+=x.key;
+     calcWindow.textContent=val1;
+   }
+   if(x.key==="."){
+     decimal.click();
+   }
+   if(x.key==="Enter"){
+     x.preventDefault();
+     evaluate();
+   }
+   if(x.key==="Backspace"){
+     deleteButton.click();
+   }
+   /*Add operation keyboard functionality*/
+  
+ });

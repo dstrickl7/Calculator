@@ -12,7 +12,7 @@ body{
 #calcBody{
   height: 500px;
   width: 300px;
-  background-image: linear-gradient( rgba(50, 15, 50, 1), rgba(105, 25, 250, 1));
+  background-image: linear-gradient(rgba(50, 15, 50, 1), rgba(105, 25, 250, 1));
   border-radius: 5%;
   box-shadow: 10px 5px 10px;
 }
@@ -24,33 +24,34 @@ body{
 }
 
 #calcWindowContainer{
-  background: rgba(25, 250, 250, .9);
+  /*background: rgba(205, 205, 205, 0.9);*/
+  background: rgb(0,0,0);
   display: flex;
   flex-flow: column wrap;
   height: 25%;
-  margin: 10px;
+  margin: 0.75em;
   border-radius: 15%;
   border-style: inset;
 }
 
+#calcWindow{
+  padding: .2em;
+}
  #history{
    text-align: right;
-   padding: .3em;
+   padding: 0.4em;
    flex: 1;
+   color: rgb(175, 175, 175);
 }
 
 #calcWindow{
-  
+  color: rgb(255, 255, 255);
   font-size: 2em;
   border-radius: 15%;
   text-align: right;
   vertical-align: bottom;
- 
 }
   
-
-  
-
 #calcWindow:focus{
   outline: none;
 }
@@ -61,77 +62,63 @@ button{
 }
 
 #calcButtons{
-  background: rgba(150, 150, 150, .2);
   width: 280px;
-  height: 80%;
-  margin: 10px;
-  
-  
+  height: 70%;
+  margin: 10px; 
 }
 
-.memoryButtons{
-  border-radius: 20%;
-  height: 30%;
-  background: rgba(200, 50, 150, 1);
-}
-
-#delete{
+#delete, #clear{
   border-radius: 50%;
-  
 }
 
-.number{
-
+.number, #negate{
   margin: 5px;
   border-radius: 15%;
+  font-size: 1.5em;
 }
 
-.number:hover{
-  background: rgba(250, 250, 250, .4);
+.number:hover, #negate:hover{
+  background: rgba(250, 250, 250, 0.4);
 }
 
 
 .operator, #equal{
   margin: 5px;
   background: rgba(0, 125, 250, 1);
+  border-radius: 15%;
   font-size: 1.5em;
 }
 
-.operator:hover{
-  background: rgba(0, 125, 250, .6);
+.operator:hover, #equal:hover{
+  background: rgba(0, 125, 250, 0.6);
 }
 
 .gridContainer{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 5px;
 }
 
-#one, #two, #three, #times{
+#one, #two, #three{
   grid-row: 2;
 }
 
-#four, #five, #six,  #divide{
+#four, #five, #six{
   grid-row: 3;
 }
 
-#seven, #eight, #nine, #plus{
+#seven, #eight, #nine{
   grid-row: 4;
 }
 
-#zero, #decimal, #equal, #minus{
+#zero, #decimal, #equal{
   grid-row: 5;
 }
 
-#plus, #minus{
-  grid-column:4;
+#plus, #minus, #multiply, #divide, #equal{
+  grid-column: 4;
 }
 
-
-
-
-#historyClear{
-  position: fixed;
-  top: 300px;
-  right: 375px;
+#zero{
+  grid-column: 2;
 }
