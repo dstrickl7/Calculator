@@ -16,23 +16,21 @@ let isDecimal= false;
 let wasEvaluated= false;
 
 
-
 /*Math Functions*/
 const add= (num1, num2)=>{return Number(num1)+Number(num2)};
 const subtract= (num1, num2)=>{return num1-num2};
 const multiply= (num1, num2)=>{return num1*num2};
 const divide= (num1, num2)=> {
-	if(num2==0){
-	  return "Don't be cheeky";
-	}else{
-	  return num1/num2;
-	}};
+  if(num2==0){
+    return "Don't be cheeky";
+  }else{
+    return num1/num2;
+  }};
 
 /*Current issues to fix*/
 /*If two different operators are selected, only the first operator is registered. Need to return the last operator*/
 /*If evaluated, hitting an operation does not continue the operation.*/
 /*If large number is returned, value breaks out of it's container*/
-/*If backspace deletes a decimal, a new decimal can't be added*/
 
 function getNums(x){
   if(wasEvaluated==true){
@@ -47,13 +45,14 @@ function getNums(x){
   calcWindow.innerText= val1;
 }
 
-/*Need to stop 0 from being displayed if negate button is pushed with no value in window*/
-
 function addNeg(){
-  calcWindow.innerText= -calcWindow.innerText;
-  val1=calcWindow.innerText;
-  wasNegated=true;
-  
+  if(calcWindow.innerText===""){
+    return
+  }else{
+    calcWindow.innerText= -calcWindow.innerText;
+      val1=calcWindow.innerText;
+      wasNegated=true;
+  }  
 }
 
 function getOp(x){
@@ -64,12 +63,13 @@ function getOp(x){
   isDecimal=false;
   const opName = x.target.name;
   currentOp= x.target.innerText;
+  
   if(result && val1 && opName){
     tempResult=operate();
     calcWindow.innerText=operate();
     val2+=val1+" "+currentOp;
-		history.innerText=val2;
-		val1="";
+    history.innerText=val2;
+    val1="";
     result=Number(tempResult);
   }else{
     result=Number(val1);
@@ -109,11 +109,11 @@ function operate(){
 }
 
 function clearVar(innerText=""){
-	if(!tempResult){
-		val2+=val1+" " + innerText + " ";
-		history.innerText=val2;
-		val1="";
-		}
+  if(!tempResult){
+    val2+=val1+" " + innerText + " ";
+    history.innerText=val2;
+    val1="";
+    }
   }
   
 function resetCalc(){
@@ -132,9 +132,15 @@ function resetCalc(){
 clear.addEventListener("click", resetCalc);
 
 deleteButton.addEventListener("click", ()=>{
-	calcWindow.innerText=calcWindow.innerText.slice(0,-1);
-  val1=calcWindow.innerText;
+  calcWindow.innerText=calcWindow.innerText.slice(0,-1);
+    val1=calcWindow.innerText;
+    if(calcWindow.innerText.includes('.')){
+      return
+    }else{
+      isDecimal=false;
+    }
 });
+
 equal.addEventListener("click", evaluate);
 
 negate.addEventListener("click", addNeg);
@@ -158,6 +164,7 @@ document.addEventListener("keydown", (x)=>{
    if(x.key==="Backspace"){
      deleteButton.click();
    }
+
    /*Add operation keyboard functionality*/
   
  });
