@@ -161,8 +161,13 @@ number.forEach((button) => button.addEventListener("click", getNums));
 
 operator.forEach((button) => button.addEventListener("click", getOp));
 
+/*Keyboard Functionality */
+
 document.addEventListener("keydown", (x) => {
   if (x.key >= 0 && x.key <= 9) {
+    if (wasEvaluated === true) {
+      resetCalc();
+    }
     val1 += x.key;
     calcWindow.textContent = val1;
   }
@@ -188,6 +193,4 @@ document.addEventListener("keydown", (x) => {
   if (x.key === "Backspace") {
     deleteButton.click();
   }
-
-  /*Add operation keyboard functionality*/
 });
