@@ -76,4 +76,4 @@ Danielle S.
 - Github - [dstrickl7](https://github.com/dstrickl7)
 
 ### Acknowledgements
-- WEBCIFAR [Build A Simple Calculator With JavaScript | Mini Project For Beginners] (https://www.youtube.com/channel/UCdxaLo9ALJgXgOUDURRPGiQ) - I viewed part of their video to figure out how to display my values. I also liked the history display they used and decided to incorporate my own version of it in my project.
+- WEBCIFAR [Build A Simple Calculator With JavaScript] (https://www.youtube.com/channel/UCdxaLo9ALJgXgOUDURRPGiQ) - I viewed part of their video to figure out how to display my values. I also liked the history display they used and decided to incorporate my own version of it in my project.
