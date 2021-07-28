@@ -22,15 +22,16 @@ This is a solution to the Odin Project Calculator
 ### The challenge
 
 Create a calculator with these features:
--Add
--Subtract
--Divide
--Multiply
--Evaluate
+- Add
+- Subtract
+- Divide
+- Multiply
+- Evaluate
+
 Bonus
--Allow user to use decimals
--Allow user to undo a typo(Backspace)
--Add keyboard functionality
+- Allow user to use decimals
+- Allow user to undo a typo(Backspace)
+- Add keyboard functionality
 
 ### Links
 
